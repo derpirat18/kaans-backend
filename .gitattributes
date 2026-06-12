@@ -1,0 +1,16 @@
+﻿# Normaliza los finales de linea a LF en todo el repositorio
+* text=auto eol=lf
+
+# Archivos que SI deben conservar finales de linea de Windows (CRLF)
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Archivos binarios: Git no debe tocarlos jamas
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg text
+*.pdf binary
+*.zip binary
