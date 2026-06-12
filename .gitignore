@@ -1,0 +1,32 @@
+﻿# === Entorno virtual (la burbuja) ===
+venv/
+.venv/
+env/
+
+# === Cache y compilados de Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+
+# === Secretos y variables de entorno (CRITICO) ===
+.env
+.env.*
+!.env.example
+
+# === Base de datos local (SQLite) ===
+*.db
+*.sqlite3
+*.sqlite
+
+# === Configuracion de editores e IDEs ===
+.vscode/
+.idea/
+*.swp
+
+# === Sistema operativo ===
+.DS_Store
+Thumbs.db
+
+# === Archivos comprimidos pesados ===
+*.zip
+*.rar
