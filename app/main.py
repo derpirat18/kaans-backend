@@ -1,18 +1,37 @@
-from fastapi import FastAPI
 # Importamos la clase FastAPI desde la librería que instalaste. 
 # Es el "molde" con el que se construye una aplicación. 
 # Importar es traer una herramienta de su caja para usarla aquí.
+from fastapi import FastAPI
 
-app = FastAPI(title="Kaans API", description="Sera nuestra API de Kaans", version="1.0.0")
-# Creamos una instancia de la clase FastAPI y la asignamos a la variable "app". 
-# Esta variable es lo que usaremos para definir nuestras rutas y manejar las solicitudes.
-# Es como crear un nuevo proyecto o aplicación usando el molde que importamos.
+# Importamos el middleware de CORS (Cross-Origin Resource Sharing) que nos ayudará a manejar
+# las solicitudes de diferentes orígenes, como el frontend que podría estar en localhost:5173.
+from fastapi.middleware.cors import CORSMiddleware
 
-@app.get("/health")
+# Importamos la configuración que definimos en el archivo config.py.
+from app.core.config import settings
+
+
+# Aquí estamos creando una instancia de FastAPI y configurándola con el nombre 
+# del proyecto y la versión que definimos en settings.
+app = FastAPI(
+    title=settings.PROJECT_NAME,
+    version=settings.API_VERSION
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.BACKEND_CORS_ORIGINS,  # Permitimos los orígenes definidos en la configuración.
+    allow_credentials=True,  # Permitimos el uso de cookies y credenciales en las solicitudes.
+    allow_methods=["*"],  # Permitimos todos los métodos HTTP (GET, POST, etc.).
+    allow_headers=["*"],  # Permitimos todos los encabezados en las solicitudes.
+)
+
 # Decorador que indica que esta función manejará las solicitudes GET a la ruta "/health".
+@app.get("/health")
 
-def health_check():
 # Esta función se ejecutará cuando alguien haga una solicitud GET a "/health".
+def health_check():
+    
+    # La función devuelve un diccionario con el estado "Ok".
+    # Esto es útil para verificar que la API está funcionando correctamente.
     return {"status": "ok"}
-# La función devuelve un diccionario con el estado "Ok".
-# Esto es útil para verificar que la API está funcionando correctamente.
