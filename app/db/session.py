@@ -14,3 +14,12 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)    # aquí creamos una fábrica de sesiones que se conectará a la base de datos 
                                                                                 # usando el motor que acabamos de crear.
 Base = declarative_base()   # aquí creamos una clase base para nuestras tablas, lo que nos permitirá definir nuestras tablas como clases de Python.
+
+def get_db():
+    db = SessionLocal()   # aquí creamos una nueva sesión de base de datos usando la fábrica que definimos antes.
+    try:
+        yield db  # esta función es un generador que devuelve la sesión de base de datos. 
+                   # Esto es útil para usarlo como una dependencia en FastAPI, lo que nos permitirá obtener una sesión de base de datos en nuestras rutas y asegurarnos de que se
+                   # cierre correctamente después de usarla.
+    finally:
+        db.close() # aquí nos aseguramos de cerrar la sesión de base de datos después de usarla, para liberar los recursos.

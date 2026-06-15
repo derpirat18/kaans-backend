@@ -10,6 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 # Importamos la configuración que definimos en el archivo config.py.
 from app.core.config import settings
 
+from app.routers import cursos # Importamos el router de cursos que definimos en routers/cursos.py para incluirlo en nuestra aplicación.
+
 
 # Aquí estamos creando una instancia de FastAPI y configurándola con el nombre 
 # del proyecto y la versión que definimos en settings.
@@ -35,3 +37,5 @@ def health_check():
     # La función devuelve un diccionario con el estado "Ok".
     # Esto es útil para verificar que la API está funcionando correctamente.
     return {"status": "ok"}
+
+app.include_router(cursos.router) # Aquí incluimos el router de cursos en nuestra aplicación, lo que hace que todas las rutas definidas en ese router estén disponibles en la API.
