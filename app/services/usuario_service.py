@@ -30,3 +30,13 @@ def authenticate_usuario(db: Session, email: str, password: str) -> Usuario | No
     if not verify_password(password, usuario.hashed_password):
         return None
     return usuario
+
+def get_usuarios(db: Session) -> list[Usuario]: # esta función recibe una sesión de base de datos y devuelve una lista de usuarios.
+    return db.query(Usuario).all()
+
+
+def desactivar_usuario(db: Session, usuario: Usuario) -> Usuario: # esta función recibe una sesión de base de datos y un usuario existente, y devuelve el usuario desactivado. En lugar de eliminar el usuario de la base de datos, simplemente marcamos su campo "activo" como False para indicar que ya no está activo en la aplicación.
+    usuario.activo = False
+    db.commit()
+    db.refresh(usuario)
+    return usuario

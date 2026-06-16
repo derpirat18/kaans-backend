@@ -33,3 +33,13 @@ def get_current_user( # esta función se encargará de obtener el usuario actual
         raise credenciales_invalidas
 
     return usuario
+
+def get_current_superadmin( # esta función se encargará de obtener el superadmin actual a partir del token de acceso JWT que se envía en las solicitudes. Se usará como una dependencia en las rutas que requieren permisos de superadmin para obtener la información del superadmin autenticado y verificar que tenga el rol adecuado.
+    current_user: Usuario = Depends(get_current_user),
+) -> Usuario:
+    if current_user.rol != "superadmin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="No tienes permisos suficientes para esta accion",
+        )
+    return current_user
