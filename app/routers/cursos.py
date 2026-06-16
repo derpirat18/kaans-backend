@@ -4,7 +4,7 @@ from app.core.deps import get_current_user # Importamos la función get_current_
 from app.models.usuario import Usuario # Importamos el modelo Usuario que definimos en usuario.py para representar a los usuarios en la base de datos, que se usará para obtener el usuario actual en las rutas que requieren autenticación.
 
 from app.db.session import get_db # Importamos la función get_db que definimos en session.py para obtener una sesión de base de datos.
-from app.schemas.curso import CursoCreate, CursoUpdate, CursoRead # Importamos los esquemas de Pydantic que definimos en curso.py para validar los datos de entrada y salida de nuestras rutas.
+from app.schemas.curso import CursoCreate, CursoUpdate, CursoRead, CursoReadDetalle # Importamos los esquemas de Pydantic que definimos en curso.py para validar los datos de entrada y salida de nuestras rutas.
 from app.services import curso_service # Importamos el módulo de servicios de curso que definimos en curso_service.py para manejar la lógica de negocio relacionada con los cursos.
 
 router = APIRouter(prefix="/api/cursos", tags=["cursos"]) # Aquí creamos un router de FastAPI con el prefijo "/api/cursos" para agrupar todas las rutas relacionadas con los cursos, y le asignamos la etiqueta "cursos" para documentarlas en la API.
@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/cursos", tags=["cursos"]) # Aquí creamos un rou
 def listar_cursos(db: Session = Depends(get_db)): # Esta función se ejecutará cuando  alguien haga una solicitud GET a "/api/cursos". Recibe una sesión de base de datos como dependencia usando Depends(get_db).
     return curso_service.get_cursos(db) # Aquí llamamos a la función get_cursos del servicio de curso para obtener la lista de cursos de la base de datos, y la devolvemos como respuesta.
 
-@router.get("/{slug}", response_model=CursoRead) # Aquí definimos una ruta GET para obtener un curso por su slug, y especificamos que la respuesta será un objeto CursoRead.
+@router.get("/{slug}", response_model=CursoReadDetalle) # Aquí definimos una ruta GET para obtener un curso por su slug, y especificamos que la respuesta será un objeto CursoReadDetalle, que incluye información detallada del curso junto con sus módulos y temas asociados.
 def obtener_curso(slug: str, db: Session = Depends(get_db)): # Esta función se ejecutará cuando alguien haga una solicitud GET a "/api/cursos/{slug}". Recibe el slug del curso como parámetro de ruta y una sesión de base de datos como dependencia.
     curso = curso_service.get_curso_by_slug(db, slug) # Aquí llamamos a la función get_curso_by_slug del servicio de curso para buscar el curso en la base de datos usando el slug.
     if curso is None: # Si no se encuentra el curso, lanzamos una excepción HTTP 404 Not Found con un mensaje de error.
