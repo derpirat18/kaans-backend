@@ -8,6 +8,7 @@ from alembic import context
 from app.core.config import settings # importamos la configuración para obtener la URL de la base de datos
 from app.db.session import Base # importamos la clase Base para usar su metadata en las migraciones
 from app.models.curso import Curso # importamos el modelo Curso para que su metadata se incluya en las migraciones
+from app.models.usuario import Usuario # importamos el modelo Usuario para que su metadata se incluya en las migraciones
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

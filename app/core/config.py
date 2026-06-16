@@ -3,6 +3,8 @@
 # y SettingsConfigDict (la que le dice de dónde leer, como el archivo .env).
 from pydantic_settings import BaseSettings, SettingsConfigDict 
 
+from pathlib import Path # Importamos Path para manejar rutas de archivos de manera más fácil y compatible con diferentes sistemas operativos.
+
 class Settings(BaseSettings): # Esta clase es donde definimos todas las variables de configuración que nuestra aplicación va a usar.
 
     # Estas variables son parte de la configuración de nuestra aplicación.
@@ -14,8 +16,14 @@ class Settings(BaseSettings): # Esta clase es donde definimos todas las variable
 
     DATABASE_URL: str = "sqlite:///./kaans.db" # URL de conexión a la base de datos, en este caso una base de datos SQLite llamada kaans.db.
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")   # Esto le dice a Pydantic que busque un archivo llamado .env 
-                                                                                    # en el mismo directorio y que lo lea para obtener las variables de configuración, 
-                                                                                    # # permitiendo así que podamos cambiar la configuración sin modificar el código fuente.     
+    SECRET_KEY: str #
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+
+    model_config = SettingsConfigDict(
+        env_file=Path(__file__).resolve().parent.parent.parent / ".env",
+        env_file_encoding="utf-8",
+    )   # Esta configuración le dice a Pydantic que lea las variables de entorno desde un archivo 
+        # .env ubicado en la raíz del proyecto (tres niveles arriba de este archivo), y que el archivo esté codificado en UTF-8.       
 settings = Settings()   # Aquí creamos una instancia de la clase Settings, 
                         # lo que hace que se lean las variables de configuración y estén disponibles para usar en toda la aplicación.
