@@ -22,3 +22,8 @@ class UsuarioRead(UsuarioBase): # esta clase hereda de UsuarioBase y se usa para
 class UsuarioLogin(BaseModel): # esta clase se usa para el esquema de login, y solo tiene los campos email y password que son necesarios para autenticar a un usuario.
     email: EmailStr
     password: str
+
+class UsuarioUpdate(BaseModel): # esta clase se usa para el esquema de actualización de usuario, y tiene campos opcionales que se pueden actualizar, como email, nombre, rol y activo. Estos campos son opcionales porque no es necesario actualizar todos los campos de un usuario, solo los que se quieran cambiar.
+    nombre: str | None = None
+    rol: str | None = None
+    activo: bool | None = None
