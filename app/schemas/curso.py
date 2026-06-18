@@ -1,5 +1,6 @@
 from pydantic import BaseModel, ConfigDict # Importamos BaseModel para crear un modelo de datos y ConfigDict para configurar el modelo.
 from app.schemas.modulo import ModuloRead # Importamos el esquema ModuloRead para usarlo en el esquema CursoRead, ya que un curso puede tener varios módulos asociados.
+from app.schemas.categoria import CategoriaRead # Importamos el esquema CategoriaRead para usarlo en el esquema CursoRead, ya que un curso pertenece a una categoría.
 
 #schema 1 curso base con los campos que se van a usar para crear un nuevo curso, sin el id que se genera automáticamente.
 
@@ -29,7 +30,7 @@ class CursoUpdate(BaseModel):
 # schema 4 CursoRead que hereda de CursoBase, y se usa para leer un curso existente, tiene un campo adicional id que es el identificador único del curso en la base de datos.
 class CursoRead(CursoBase): 
     id: int # el id es un entero que se genera automáticamente en la base de datos y se usa para identificar de manera única cada curso.
-
+    categoria_obj: CategoriaRead | None = None # la categoría del curso también se puede representar como un objeto de tipo CategoriaRead, que contiene más información sobre la categoría, como su nombre y descripción. Este campo es opcional, por eso se define como CategoriaRead | None y se le asigna un valor por defecto de None.
     model_config = ConfigDict(from_attributes=True) # esta configuración le dice a Pydantic que al crear una instancia de este modelo a partir de un objeto (como una instancia de SQLAlchemy), 
                                                     # tome los valores de los atributos del objeto en lugar de esperar un diccionario con los mismos nombres.
 
