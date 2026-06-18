@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text    # importamos las clases necesarias de SQLAlchemy para definir nuestras tablas y sus columnas.
+from sqlalchemy import Column, Integer, String, Text, ForeignKey    # importamos las clases necesarias de SQLAlchemy para definir nuestras tablas y sus columnas.
 from app.db.session import Base    # importamos la clase Base que definimos en session.py para usarla como base para nuestra tabla.
 from sqlalchemy.orm import relationship # importamos la función relationship de SQLAlchemy para definir las relaciones entre nuestras tablas, lo que nos permitirá acceder a los módulos de un curso y a los temas de un módulo de manera más sencilla.
 
@@ -9,6 +9,8 @@ class Curso(Base):   # aquí definimos la clase Curso, que representa la tabla "
     slug = Column(String(150), unique=True, index=True, nullable=False) # aquí definimos la columna "slug" como una cadena de texto de hasta 150 caracteres, que debe ser única, se indexa para mejorar el rendimiento de las consultas y no puede ser nula.
     titulo = Column(String(200), nullable=False) # aquí definimos la columna "titulo" como una cadena de texto de hasta 200 caracteres, y no puede ser nula.
     categoria = Column(String(100), nullable=False) # aquí definimos la columna "categoria" como una cadena de texto de hasta 100 caracteres, y no puede ser nula.
+    categoria_id = Column(Integer, ForeignKey("categorias.id"), nullable=True) # aquí definimos la columna "categoria_id" como un entero que es una clave foránea que hace referencia a la columna "id" de la tabla "categorias". Esta columna puede ser nula, lo que significa que un curso no necesariamente tiene que estar asociado a una categoría.
+    categoria_obj = relationship("Categoria") # aquí definimos la relación entre la tabla "cursos" y la tabla "categorias". Esto nos permitirá acceder a la categoría de un curso de manera más sencilla.
     descripcion = Column(Text, nullable=True) # aquí definimos la columna "descripcion" como un texto largo, y puede ser nula.
     duracion_horas = Column(Integer, nullable=True) # aquí definimos la columna "duracion_horas" como un entero, y puede ser nula.
     nivel = Column(String(100), nullable=True) # aquí definimos la columna "nivel" como una cadena de texto de hasta 100 caracteres, y puede ser nula.
