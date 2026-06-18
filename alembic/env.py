@@ -11,6 +11,7 @@ from app.models.curso import Curso # importamos el modelo Curso para que su meta
 from app.models.usuario import Usuario # importamos el modelo Usuario para que su metadata se incluya en las migraciones
 from app.models.modulo import Modulo # importamos el modelo Modulo para que su metadata se incluya en las migraciones
 from app.models.tema import Tema # importamos el modelo Tema para que su metadata se incluya en las migraciones
+from app.models.categoria import Categoria # importamos el modelo Categoria para que su metadata se incluya en las migraciones
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
